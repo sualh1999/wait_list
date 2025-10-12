@@ -30,8 +30,8 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 - [x] Add validation & loading states
 
 ### 3. Local dev experience
-- [ ] docker-compose.dev (optional) for local quickstart
-- [ ] Scripts in README to run local backend & frontend
+- [x] docker-compose.dev (optional) for local quickstart
+- [x] Scripts in README to run local backend & frontend
 
 ### 4. Deployment
 - [x] Deploy Supabase project and create table (instructions in README)
