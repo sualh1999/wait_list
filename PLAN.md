@@ -11,16 +11,16 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 - [x] Create repo skeleton, .gitignore, .env.example, README.md, PLAN.md
 
 ### 1. Backend basic
-- [ ] Create FastAPI app skeleton (app/main.py)
-- [ ] Setup async SQLAlchemy + models + migrations notes
-- [ ] Implement /waitlist POST endpoint
-- [ ] Implement duplicate email check (db unique constraint)
-- [ ] Implement Resend email util (email on success)
-- [ ] Implement admin auth endpoints (/admin/login, /admin/list)
-- [ ] Add health check endpoint /health
-- [ ] Add CORS, config via env
-- [ ] Add tests for endpoints
-- [ ] Dockerfile for backend
+- [x] Create FastAPI app skeleton (app/main.py)
+- [x] Setup async SQLAlchemy + models + migrations notes
+- [x] Implement /waitlist POST endpoint
+- [x] Implement duplicate email check (db unique constraint)
+- [x] Implement Resend email util (email on success)
+- [x] Implement admin auth endpoints (/admin/login, /admin/list)
+- [x] Add health check endpoint /health
+- [x] Add CORS, config via env
+- [x] Add tests for endpoints
+- [x] Dockerfile for backend
 
 ### 2. Frontend basic
 - [ ] Create Next.js app with Tailwind
