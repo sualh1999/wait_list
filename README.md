@@ -97,34 +97,31 @@ It is recommended to use a Python virtual environment for the backend developmen
     python3 -m pytest backend/tests
     ```
 
-## Database Setup (Supabase)
+### 4. Backend Deployment (Render)
 
-This project uses PostgreSQL, and it's recommended to use Supabase for easy setup.
+To deploy the FastAPI backend to Render:
 
-1.  **Create a Supabase Project:**
-    *   Go to [Supabase](https://supabase.com/) and create a new project.
-    *   Note down your project's region and database password.
+1.  **Create a new Web Service on Render:**
+    *   Go to [Render](https://render.com/) and create a new `Web Service`.
+    *   Connect your GitHub repository.
+    *   Select the `backend` folder as the root directory for the service.
 
-2.  **Get your DATABASE_URL:**
-    *   In your Supabase project dashboard, navigate to `Project Settings` -> `Database`.
-    *   Under the `Connection String` section, copy the `URI` (connection string).
-    *   It will look something like: `postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres`
-    *   Replace `[YOUR-PASSWORD]` with your actual database password.
+2.  **Configure the service:**
+    *   **Build Command:** Leave empty (Render will detect the `Dockerfile`).
+    *   **Start Command:** Leave empty (Render will use `CMD` from `Dockerfile`).
+    *   **Runtime:** Docker
+    *   **Port:** `8000`
+    *   **Health Check Path:** `/health`
 
-3.  **Create the `waitlist` table:**
-    *   In your Supabase project dashboard, navigate to `SQL Editor`.
-    *   Run the following SQL queries to create the `waitlist` table:
+3.  **Add Environment Variables:**
+    *   In Render, go to your service settings and add the following environment variables. These should match the values from your `.env` file, but ensure they are set directly in Render's dashboard for security.
+        *   `DATABASE_URL`: Your Supabase connection string (e.g., `postgresql://postgres:YOUR_PASSWORD@db.YOUR_PROJECT_REF.supabase.co:5432/postgres`).
+        *   `RESEND_API_KEY`: Your Resend API key.
+        *   `ADMIN_PASSWORD`: Your chosen admin password.
+        *   `ALLOWED_ORIGINS`: A comma-separated list of allowed origins (e.g., `https://your-frontend-domain.vercel.app,http://localhost:3000`).
 
-    ```sql
-    create extension if not exists "uuid-ossp";
+4.  **Deploy:** Trigger a deploy. Once deployed, note the live URL of your backend service.
 
-    create table if not exists waitlist (
-      id uuid primary key default gen_random_uuid(),
-      email text unique not null,
-      created_at timestamp with time zone default now()
-    );
-    ```
-
-4.  **Configure CORS (if using Supabase functions/Edge Functions):**
-    *   If you plan to use Supabase Edge Functions or other Supabase-hosted services that require CORS, you might need to configure it in your Supabase project settings under `API` -> `CORS`.
-    *   Add your frontend URL (e.g., `http://localhost:3000`, `https://your-frontend-domain.vercel.app`) to the allowed origins.
+5.  **Verification:**
+    *   Access the `/health` endpoint of your deployed backend (e.g., `https://your-backend.onrender.com/health`). It should return `{"status": "ok"}`.
+    *   Test the `/waitlist` endpoint using a tool like Postman or `curl` to ensure it accepts new email submissions.
