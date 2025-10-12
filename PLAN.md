@@ -39,6 +39,12 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 - [ ] Deploy frontend to Vercel, set env
 - [ ] Verify live frontend <-> backend integration
 
-### 5. Documentation & finalization
+### 5. Tests & basic CI
+- [x] Add tests verifying:
+    - [x] POST /waitlist accepts new email and rejects duplicate
+    - [x] POST /admin/login returns token for correct password
+- [x] Add github/workflows/ci.yml
+
+### 6. Documentation & finalization
 - [ ] README with live URLs, admin password, and local dev steps
 - [ ] Clean up and final commit
