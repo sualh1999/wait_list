@@ -8,7 +8,7 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 ## Checklist
 
 ### 0. Repo initialize
-- [ ] Create repo skeleton, .gitignore, .env.example, README.md, PLAN.md
+- [x] Create repo skeleton, .gitignore, .env.example, README.md, PLAN.md
 
 ### 1. Backend basic
 - [ ] Create FastAPI app skeleton (app/main.py)
