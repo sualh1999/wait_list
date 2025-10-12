@@ -23,11 +23,11 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 - [x] Dockerfile for backend
 
 ### 2. Frontend basic
-- [ ] Create Next.js app with Tailwind
-- [ ] Implement home page (signup form)
-- [ ] Implement admin login and admin list page
-- [ ] Connect to backend (NEXT_PUBLIC_API_URL)
-- [ ] Add validation & loading states
+- [x] Create Next.js app with Tailwind
+- [x] Implement home page (signup form)
+- [x] Implement admin login and admin list page
+- [x] Connect to backend (NEXT_PUBLIC_API_URL)
+- [x] Add validation & loading states
 
 ### 3. Local dev experience
 - [ ] docker-compose.dev (optional) for local quickstart
