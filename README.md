@@ -13,6 +13,24 @@ python3 -m venv backend/.venv
 source backend/.venv/bin/activate
 ```
 
+### Frontend Setup
+
+The Next.js frontend communicates with the backend via an environment variable `NEXT_PUBLIC_API_URL`.
+
+For local development, create a `.env.local` file in the `frontend/` directory with the following content:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+Install dependencies and run the development server:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
 ## Database Setup (Supabase)
 
 This project uses PostgreSQL, and it's recommended to use Supabase for easy setup.
