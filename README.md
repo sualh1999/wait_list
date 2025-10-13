@@ -11,7 +11,6 @@ The application is live at: **https://wait-list-1j29.vercel.app/**
 -   **Admin URL:** [https://wait-list-1j29.vercel.app/admin](https://wait-list-1j29.vercel.app/admin)
 -   **Admin Password:** `123456`
 
-**Warning:** It is strongly recommended to change the admin password and not to expose it in a public README file.
 
 ## Tech Stack
 
