@@ -106,6 +106,31 @@ It is recommended to use a Python virtual environment for the backend developmen
     python3 -m pytest backend/tests
     ```
 
+### 4. Database Migrations (Alembic)
+
+This project uses Alembic for database migrations. Migrations are automatically applied when the Docker backend service starts.
+
+To generate new migrations (after making changes to `backend/app/models.py`):
+
+1.  **Activate the backend virtual environment:**
+    ```bash
+    cd backend
+    source .venv/bin/activate
+    ```
+2.  **Generate a new migration script:**
+    ```bash
+    DATABASE_URL="postgresql://user:password@localhost:5432/waitlist_db" \
+    alembic revision --autogenerate -m "Description of your changes"
+    ```
+    *Note: You need to provide a valid `DATABASE_URL` for Alembic to connect to your database and detect changes.*
+3.  **Review and edit the generated migration script** in `backend/alembic/versions/` if necessary.
+4.  **Apply migrations (for local development outside Docker):**
+    ```bash
+    DATABASE_URL="postgresql://user:password@localhost:5432/waitlist_db" \
+    alembic upgrade head
+    ```
+    *When running with Docker Compose, migrations are applied automatically.*
+
 ## Database Setup (Supabase)
 
 This project uses PostgreSQL, and it's recommended to use Supabase for easy setup.
