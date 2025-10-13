@@ -18,9 +18,6 @@ body {
 }
 
 /* General styling for elements */
-h1, h2, h3, h4, h5, h6 {
-  color: var(--foreground);
-}
 
 a {
   color: #3b82f6; /* Tailwind blue-500 */

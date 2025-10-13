@@ -66,28 +66,28 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden md:flex transform transition-all duration-500 ease-in-out hover:scale-[1.01]">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl w-full bg-white rounded-xl shadow-lg overflow-hidden md:flex">
         {/* Left Section: Marketing Content */}
-        <div className="md:w-1/2 p-8 sm:p-10 lg:p-12 flex flex-col justify-center bg-gradient-to-br from-blue-600 to-indigo-700 text-white relative">
-          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
-          <h2 className="relative z-10 text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
+        <div className="md:w-1/2 p-8 sm:p-10 lg:p-12 flex flex-col justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white relative rounded-l-xl">
+          <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+          <h2 className="relative z-10 text-white text-4xl sm:text-5xl font-extrabold leading-tight mb-4">
             Launch Your <br /> Next Big Idea
           </h2>
-          <p className="relative z-10 text-blue-100 text-lg sm:text-xl mb-6">
+          <p className="relative z-10 text-gray-300 text-lg sm:text-xl mb-6">
             Join our exclusive waitlist and be the first to experience the future.
           </p>
-          <ul className="relative z-10 space-y-3 text-blue-100">
+          <ul className="relative z-10 space-y-3 text-gray-300">
             <li className="flex items-center text-lg">
-              <svg className="w-6 h-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+              <svg className="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
               Early Access & Exclusive Features
             </li>
             <li className="flex items-center text-lg">
-              <svg className="w-6 h-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+              <svg className="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
               Special Discounts for Early Birds
             </li>
             <li className="flex items-center text-lg">
-              <svg className="w-6 h-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+              <svg className="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
               Direct Input on Product Development
             </li>
           </ul>
@@ -99,39 +99,39 @@ export default function HomePage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <div>
-                <label htmlFor="firstName" className="block text-gray-700 text-sm font-semibold mb-2">
+                <label htmlFor="firstName" className="block text-gray-700 text-sm font-medium mb-2">
                   First Name (Optional):
                 </label>
                 <input
                   type="text"
                   id="firstName"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                   placeholder="John"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
               <div>
-                <label htmlFor="lastName" className="block text-gray-700 text-sm font-semibold mb-2">
+                <label htmlFor="lastName" className="block text-gray-700 text-sm font-medium mb-2">
                   Last Name (Optional):
                 </label>
                 <input
                   type="text"
                   id="lastName"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                   placeholder="Doe"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-gray-700 text-sm font-semibold mb-2">
+                <label htmlFor="email" className="block text-gray-700 text-sm font-medium mb-2">
                   Email Address:
                 </label>
                 <input
                   type="email"
                   id="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                   placeholder="your@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -142,7 +142,7 @@ export default function HomePage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400 transition-all duration-300 ease-in-out transform hover:scale-105 disabled:scale-100 flex items-center justify-center"
+              className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 transition-all duration-300 ease-in-out flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -154,8 +154,8 @@ export default function HomePage() {
               )}
             </button>
           </form>
-          {message && <p className="mt-4 text-green-600 text-center text-sm animate-fade-in">{message}</p>}
-          {error && <p className="mt-4 text-red-600 text-center text-sm animate-fade-in">{error}</p>}
+          {message && <p className="mt-4 text-green-600 text-center text-sm">{message}</p>}
+          {error && <p className="mt-4 text-red-600 text-center text-sm">{error}</p>}
         </div>
       </div>
     </div>
