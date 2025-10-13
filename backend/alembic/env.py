@@ -7,14 +7,14 @@ from alembic import context
 
 from asyncio import run as asyncio_run
 
-import sys
-import os
+# REMOVE THESE LINES:
+# import sys
+# import os
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-# Add the project root to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
-from backend.app.database import Base
-from backend.app.config import settings
+from app.database import Base # <--- Change to direct import from app
+from app.config import settings # <--- Change to direct import from app
+import app.models # Import your models here to ensure they are registered with Base.metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

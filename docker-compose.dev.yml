@@ -1,5 +1,9 @@
 version: '3.8'
 
+networks:
+  default:
+    name: waitlist_network
+
 services:
   db:
     image: postgres:16-alpine
@@ -12,6 +16,13 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d waitlist_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
 
   backend:
     build:
@@ -25,7 +36,10 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:8000}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - default
     # command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload # Use this for hot-reloading during dev
 
 volumes:

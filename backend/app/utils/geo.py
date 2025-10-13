@@ -13,7 +13,7 @@ async def get_country_from_ip(ip_address: str) -> Optional[str]:
             if data and data.get("status") == "success":
                 return data.get("country")
             else:
-                print(f"Geo-IP lookup failed for {ip_address}: {data.get("message", "Unknown error")}")
+                print(f"Geo-IP lookup failed for {ip_address}: {data.get('message', 'Unknown error')}")
                 return None
     except httpx.RequestError as e:
         print(f"HTTPX request failed for Geo-IP lookup: {e}")
