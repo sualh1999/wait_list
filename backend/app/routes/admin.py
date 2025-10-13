@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Body
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
@@ -18,7 +18,7 @@ async def verify_admin_token(token: str = Depends(oauth2_scheme)):
     return token
 
 @router.post("/admin/login")
-async def admin_login(password: str):
+async def admin_login(password: str = Body(..., embed=True)):
     if password == settings.ADMIN_PASSWORD:
         # In a real app, generate a JWT here
         return {"access_token": settings.ADMIN_PASSWORD, "token_type": "bearer"}
