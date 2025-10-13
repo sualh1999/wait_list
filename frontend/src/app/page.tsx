@@ -1,7 +1,19 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 
+type ErrorWithMessage = {
+  detail: string;
+};
+
+function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'detail' in error &&
+    typeof (error as any).detail === 'string'
+  );
+}
 
 export default function HomePage() {
   const [email, setEmail] = useState('');
@@ -39,9 +51,14 @@ export default function HomePage() {
         setLastName('');
       } else {
         const errorData = await response.json();
-        setError(errorData.detail || 'Something went wrong. Please try again.');
+        if (isErrorWithMessage(errorData)) {
+          setError(errorData.detail);
+        } else {
+          setError('Something went wrong. Please try again.');
+        }
       }
-    } catch (err) {
+    } catch (error) {
+      console.error(error);
       setError('Network error. Please try again later.');
     } finally {
       setIsLoading(false);
@@ -138,7 +155,7 @@ export default function HomePage() {
             </button>
           </form>
           {message && <p className="mt-4 text-green-600 text-center text-sm animate-fade-in">{message}</p>}
-          {error && <p className="mt-4 text-red-600 text-center text-sm animate-fade-in">{typeof error === 'object' && error !== null && 'detail' in error ? (error as any).detail : error}</p>}
+          {error && <p className="mt-4 text-red-600 text-center text-sm animate-fade-in">{error}</p>}
         </div>
       </div>
     </div>

@@ -1,8 +1,6 @@
-"use client";
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-
 
 interface WaitlistEntry {
   id: string;
@@ -11,6 +9,19 @@ interface WaitlistEntry {
   last_name?: string;
   country?: string;
   created_at: string;
+}
+
+type ErrorWithMessage = {
+  detail: string;
+};
+
+function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'detail' in error &&
+    typeof (error as any).detail === 'string'
+  );
 }
 
 export default function AdminPage() {
@@ -25,7 +36,6 @@ export default function AdminPage() {
   const [filterLastName, setFilterLastName] = useState('');
   const [filterCountry, setFilterCountry] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const router = useRouter();
 
   const fetchWaitlistEntries = useCallback(async (authToken: string) => {
     setIsLoading(true);
@@ -57,9 +67,14 @@ export default function AdminPage() {
         sessionStorage.removeItem('admin_token');
       } else {
         const errorData = await response.json();
-        setError(errorData.detail || 'Failed to fetch waitlist entries.');
+        if (isErrorWithMessage(errorData)) {
+          setError(errorData.detail);
+        } else {
+          setError('Failed to fetch waitlist entries.');
+        }
       }
-    } catch (err) {
+    } catch (error) {
+      console.error(error);
       setError('Network error while fetching entries.');
     } finally {
       setIsLoading(false);
@@ -104,9 +119,14 @@ export default function AdminPage() {
         fetchWaitlistEntries(data.access_token);
       } else {
         const errorData = await response.json();
-        setError(errorData.detail || 'Login failed.');
+        if (isErrorWithMessage(errorData)) {
+          setError(errorData.detail);
+        } else {
+          setError('Login failed.');
+        }
       }
-    } catch (err) {
+    } catch (error) {
+      console.error(error);
       setError('Network error. Please try again later.');
     } finally {
       setIsLoading(false);
@@ -160,7 +180,7 @@ export default function AdminPage() {
             </button>
           </form>
           {message && <p className="mt-4 text-green-600 text-center text-sm animate-fade-in">{message}</p>}
-          {error && <p className="mt-4 text-red-600 text-center text-sm animate-fade-in">{typeof error === 'object' && error !== null && 'detail' in error ? (error as any).detail : error}</p>}
+          {error && <p className="mt-4 text-red-600 text-center text-sm animate-fade-in">{error}</p>}
         </div>
       </main>
     );
@@ -258,7 +278,7 @@ export default function AdminPage() {
         </div>
 
         {isLoading && <p className="text-gray-700 flex items-center justify-center"><svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Loading waitlist entries...</p>}
-        {error && <p className="text-red-600 animate-fade-in">{typeof error === 'object' && error !== null && 'detail' in error ? (error as any).detail : error}</p>}
+        {error && <p className="text-red-600 animate-fade-in">{error}</p>}
         {!isLoading && !error && waitlistEntries.length === 0 && (
           <p className="text-gray-700">No waitlist entries found.</p>
         )}
