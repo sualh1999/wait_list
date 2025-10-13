@@ -125,3 +125,22 @@ To deploy the FastAPI backend to Render:
 5.  **Verification:**
     *   Access the `/health` endpoint of your deployed backend (e.g., `https://your-backend.onrender.com/health`). It should return `{"status": "ok"}`.
     *   Test the `/waitlist` endpoint using a tool like Postman or `curl` to ensure it accepts new email submissions.
+
+### 5. Frontend Deployment (Vercel)
+
+To deploy the Next.js frontend to Vercel:
+
+1.  **Create a new Project on Vercel:**
+    *   Go to [Vercel](https://vercel.com/) and create a new project.
+    *   Connect your GitHub repository.
+    *   Select the `frontend` folder as the root directory for the project.
+
+2.  **Configure Environment Variables:**
+    *   In your Vercel project settings, go to `Environment Variables`.
+    *   Add `NEXT_PUBLIC_API_URL` and set its value to the URL of your deployed Render backend (e.g., `https://your-backend.onrender.com`).
+
+3.  **Deploy:** Trigger a deploy. Once deployed, note the live URL of your frontend service.
+
+4.  **Verification:**
+    *   Access your deployed frontend URL. The home page should load.
+    *   Try submitting an email to the waitlist. It should successfully post to your deployed backend.
