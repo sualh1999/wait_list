@@ -10,4 +10,7 @@ class Waitlist(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email = Column(String, unique=True, index=True, nullable=False)
+    first_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=True)
+    country = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

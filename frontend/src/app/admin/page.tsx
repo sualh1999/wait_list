@@ -7,6 +7,9 @@ import Form from '@/components/Form';
 interface WaitlistEntry {
   id: string;
   email: string;
+  first_name?: string;
+  last_name?: string;
+  country?: string;
   created_at: string;
 }
 
@@ -157,6 +160,9 @@ export default function AdminPage() {
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b text-left text-gray-600">Email</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">First Name</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Last Name</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Country</th>
                   <th className="py-2 px-4 border-b text-left text-gray-600">Joined At</th>
                 </tr>
               </thead>
@@ -164,6 +170,9 @@ export default function AdminPage() {
                 {waitlistEntries.map((entry) => (
                   <tr key={entry.id}>
                     <td className="py-2 px-4 border-b text-gray-800">{entry.email}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{entry.first_name || 'N/A'}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{entry.last_name || 'N/A'}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{entry.country || 'N/A'}</td>
                     <td className="py-2 px-4 border-b text-gray-800">{new Date(entry.created_at).toLocaleString()}</td>
                   </tr>
                 ))}

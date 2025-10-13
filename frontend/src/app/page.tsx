@@ -5,6 +5,8 @@ import Form from '@/components/Form';
 
 export default function HomePage() {
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -27,12 +29,14 @@ export default function HomePage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, first_name: firstName, last_name: lastName }),
       });
 
       if (response.ok) {
         setMessage('Successfully joined the waitlist! Check your email for a confirmation.');
         setEmail('');
+        setFirstName('');
+        setLastName('');
       } else {
         const errorData = await response.json();
         setError(errorData.detail || 'Something went wrong. Please try again.');
@@ -61,6 +65,32 @@ export default function HomePage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">
+              First Name (optional):
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="John"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="lastName" className="block text-gray-700 text-sm font-bold mb-2">
+              Last Name (optional):
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Doe"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
           <button

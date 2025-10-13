@@ -3,8 +3,13 @@ from sqlalchemy.future import select
 
 from . import models, schemas
 
-async def create_waitlist_entry(db: AsyncSession, entry: schemas.WaitlistCreate):
-    db_entry = models.Waitlist(email=entry.email.lower().strip())
+async def create_waitlist_entry(db: AsyncSession, entry: schemas.WaitlistCreate, country: Optional[str] = None):
+    db_entry = models.Waitlist(
+        email=entry.email.lower().strip(),
+        first_name=entry.first_name,
+        last_name=entry.last_name,
+        country=country
+    )
     db.add(db_entry)
     await db.commit()
     await db.refresh(db_entry)

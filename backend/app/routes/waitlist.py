@@ -1,15 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
 from .. import schemas, crud
 from ..database import get_db
 from ..utils.email import send_welcome_email
+from ..utils.geo import get_country_from_ip
 
 router = APIRouter()
 
 @router.post("/waitlist", response_model=schemas.WaitlistOut, status_code=status.HTTP_201_CREATED)
-async def create_waitlist_entry(entry: schemas.WaitlistCreate, db: AsyncSession = Depends(get_db)):
+async def create_waitlist_entry(request: Request, entry: schemas.WaitlistCreate, db: AsyncSession = Depends(get_db)):
     # Normalize email
     normalized_email = entry.email.lower().strip()
 
@@ -18,8 +19,12 @@ async def create_waitlist_entry(entry: schemas.WaitlistCreate, db: AsyncSession 
     if db_entry:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already on waitlist")
 
+    # Get client IP and detect country
+    client_ip = request.client.host if request.client else None
+    country = await get_country_from_ip(client_ip)
+
     try:
-        new_entry = await crud.create_waitlist_entry(db, schemas.WaitlistCreate(email=normalized_email))
+        new_entry = await crud.create_waitlist_entry(db, entry, country)
         await send_welcome_email(new_entry.email)
         return new_entry
     except IntegrityError:
