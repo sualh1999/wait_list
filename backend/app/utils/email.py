@@ -70,6 +70,7 @@ async def send_welcome_email(to_email: str):
     msg.attach(MIMEText(plain_text_content, "plain"))
     msg.attach(MIMEText(html_content, "html"))
 
+    print(f"Attempting to send email to {to_email}...")
     try:
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
