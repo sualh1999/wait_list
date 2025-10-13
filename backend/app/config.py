@@ -3,10 +3,11 @@ from typing import List, Optional
 
 class Settings(BaseSettings):
     DATABASE_URL: str
-    RESEND_API_KEY: str
+    GMAIL_USER: str
+    GMAIL_PASS: str
     ADMIN_PASSWORD: str
     ALLOWED_ORIGINS: str = ""
 
-    model_config = SettingsConfigDict(env_file=None) # Explicitly disable .env file loading
+    model_config = SettingsConfigDict(env_file=".env")
 
 settings = Settings()
