@@ -2,17 +2,42 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import logging
+import asyncio # Import asyncio
 from ..config import settings
 
 logger = logging.getLogger(__name__)
+
+def _send_sync_email(to_email: str, msg: MIMEMultipart):
+    """Synchronous helper function to send email."""
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(settings.GMAIL_USER, settings.GMAIL_PASS)
+            server.send_message(msg)
+        logger.info(f"Email sent successfully to {to_email}")
+    except smtplib.SMTPAuthenticationError as e:
+        logger.error(f"SMTP Authentication Error: Failed to log in to SMTP server. Check GMAIL_USER and GMAIL_PASS. Error: {e}")
+        raise # Re-raise to be caught by the async function
+    except smtplib.SMTPServerDisconnected as e:
+        logger.error(f"SMTP Server Disconnected: The SMTP server unexpectedly disconnected. Error: {e}")
+        raise
+    except smtplib.SMTPConnectError as e:
+        logger.error(f"SMTP Connect Error: Failed to connect to the SMTP server. Check host and port. Error: {e}")
+        raise
+    except smtplib.SMTPException as e:
+        logger.error(f"SMTP Error: An unexpected SMTP error occurred. Error: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"An unexpected error occurred while sending email to {to_email}: {e}", exc_info=True)
+        raise
+
 
 async def send_welcome_email(to_email: str):
     if not settings.GMAIL_USER or not settings.GMAIL_PASS:
         logger.warning("GMAIL_USER or GMAIL_PASS is not set. Skipping email sending.")
         return
-
-    smtp_server = "smtp.gmail.com"
-    smtp_port = 587
 
     subject = "Welcome to the Waitlist!"
 
@@ -76,18 +101,6 @@ async def send_welcome_email(to_email: str):
     logger.info(f"Attempting to send email to {to_email}...")
     logger.debug(f"Email message details: From={msg['From']}, To={msg['To']}, Subject={msg['Subject']}")
     try:
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(settings.GMAIL_USER, settings.GMAIL_PASS)
-            server.send_message(msg)
-        logger.info(f"Email sent successfully to {to_email}")
-    except smtplib.SMTPAuthenticationError as e:
-        logger.error(f"SMTP Authentication Error: Failed to log in to SMTP server. Check GMAIL_USER and GMAIL_PASS. Error: {e}")
-    except smtplib.SMTPServerDisconnected as e:
-        logger.error(f"SMTP Server Disconnected: The SMTP server unexpectedly disconnected. Error: {e}")
-    except smtplib.SMTPConnectError as e:
-        logger.error(f"SMTP Connect Error: Failed to connect to the SMTP server. Check host and port. Error: {e}")
-    except smtplib.SMTPException as e:
-        logger.error(f"SMTP Error: An unexpected SMTP error occurred. Error: {e}")
-    except Exception as e:
-        logger.error(f"An unexpected error occurred while sending email to {to_email}: {e}", exc_info=True)
+        await asyncio.to_thread(_send_sync_email, to_email, msg)
+    except Exception: # Catch exceptions re-raised from _send_sync_email
+        logger.error(f"Failed to send email to {to_email} after retries.")
