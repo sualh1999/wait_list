@@ -79,9 +79,9 @@ Enhance the Waitlist App by collecting optional first name and last name from us
 
 #### 4. Redesign, Dark Mode & Animations
 - [ ] **Frontend Redesign:**
-    - [x] Implement a creative and modern design for the signup and admin pages.
-    - [x] Add a dark mode toggle and apply dark mode styling across the frontend.
-    - [x] Incorporate subtle animations for user interactions (e.g., form submission, loading states, page transitions).
+    - [ ] Implement a creative and modern design for the signup and admin pages.
+    - [x] Add a dark mode toggle and apply dark mode styling across the frontend. (Implemented and then removed as per user request for new design)
+    - [ ] Incorporate subtle animations for user interactions (e.g., form submission, loading states, page transitions).
 - [ ] **Email Redesign:**
     - [x] Update `backend/app/utils/email.py`: Use a more creative and visually appealing HTML template for the welcome email.
 - [ ] **Backend (Minor Aesthetic):**
