@@ -1,11 +1,27 @@
-import httpx
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from ..config import settings
 
 async def send_welcome_email(to_email: str):
-    if not settings.RESEND_API_KEY:
-        print("RESEND_API_KEY is not set. Skipping email sending.")
+    if not settings.GMAIL_USER or not settings.GMAIL_PASS:
+        print("GMAIL_USER or GMAIL_PASS is not set. Skipping email sending.")
         return
 
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+
+    subject = "Welcome to the Waitlist!"
+
+    # Plain text version of the email
+    plain_text_content = (
+        "Thank you for joining our waitlist! We're excited to have you.\n\n"
+        "You'll be among the first to know when we have exciting updates to share.\n\n"
+        "Stay tuned!\n\n"
+        "\n© 2025 Waitlist App. All rights reserved."
+    )
+
+    # HTML version of the email
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -14,7 +30,15 @@ async def send_welcome_email(to_email: str):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Welcome to the Waitlist!</title>
         <style>
-            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }}\n            .container {{ max-width: 600px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); }}\n            .header {{ text-align: center; padding-bottom: 20px; border-bottom: 1px solid #eeeeee; }}\n            .header h1 {{ color: #333333; font-size: 28px; margin: 0; }}\n            .content {{ padding: 20px 0; line-height: 1.6; color: #555555; font-size: 16px; }}\n            .content p {{ margin-bottom: 15px; }}\n            .footer {{ text-align: center; padding-top: 20px; margin-top: 30px; border-top: 1px solid #eeeeee; font-size: 12px; color: #aaaaaa; }}\n            .footer p {{ margin: 0; }}\n        </style>
+            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }}
+            .container {{ max-width: 600px; margin: 20px auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); }}
+            .header {{ text-align: center; padding-bottom: 20px; border-bottom: 1px solid #eeeeee; }}
+            .header h1 {{ color: #333333; font-size: 28px; margin: 0; }}
+            .content {{ padding: 20px 0; line-height: 1.6; color: #555555; font-size: 16px; }}
+            .content p {{ margin-bottom: 15px; }}
+            .footer {{ text-align: center; padding-top: 20px; margin-top: 30px; border-top: 1px solid #eeeeee; font-size: 12px; color: #aaaaaa; }}
+            .footer p {{ margin: 0; }}
+        </style>
     </head>
     <body>
         <div class="container">
@@ -35,23 +59,22 @@ async def send_welcome_email(to_email: str):
     </html>
     """
 
-    headers = {
-        "Authorization": f"Bearer {settings.RESEND_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "from": "Waitlist App <onboarding@resend.dev>", # Replace with your verified Resend domain
-        "to": [to_email],
-        "subject": "Welcome to the Waitlist!",
-        "html": html_content
-    }
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"] = settings.GMAIL_USER
+    msg["To"] = to_email
 
-    async with httpx.AsyncClient() as client:
-        try:
-            response = await client.post("https://api.resend.com/emails", headers=headers, json=data)
-            response.raise_for_status()
-            print(f"Email sent successfully to {to_email}: {response.json()}")
-        except httpx.HTTPStatusError as e:
-            print(f"Failed to send email to {to_email}: {e.response.status_code} - {e.response.text}")
-        except httpx.RequestError as e:
-            print(f"An error occurred while sending email to {to_email}: {e}")
+    # Attach parts into message container.
+    # According to RFC 2046, the last part of a multipart message, in this case
+    # the HTML part, is best and preferred.
+    msg.attach(MIMEText(plain_text_content, "plain"))
+    msg.attach(MIMEText(html_content, "html"))
+
+    try:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(settings.GMAIL_USER, settings.GMAIL_PASS)
+            server.send_message(msg)
+        print(f"Email sent successfully to {to_email}")
+    except Exception as e:
+        print(f"Failed to send email to {to_email}: {e}")
