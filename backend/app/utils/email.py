@@ -66,7 +66,7 @@ async def send_welcome_email(to_email: str):
 
     logger.info(f"Attempting to send email to {to_email} using Brevo...")
     try:
-        response = await api_instance.send_transac_email(send_smtp_email)
+        response = api_instance.send_transac_email(send_smtp_email)
         logger.info(f"Email sent successfully to {to_email}: {response}")
     except Exception as e:
         logger.error(f"Failed to send email to {to_email}: {e}", exc_info=True)
