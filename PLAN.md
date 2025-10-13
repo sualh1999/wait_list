@@ -85,7 +85,7 @@ Enhance the Waitlist App by collecting optional first name and last name from us
 - [ ] **Email Redesign:**
     - [x] Update `backend/app/utils/email.py`: Use a more creative and visually appealing HTML template for the welcome email.
 - [ ] **Backend (Minor Aesthetic):**
-    - [x] (Optional) Review API responses for consistency and clarity, but no major functional redesign.
+    - [ ] (Optional) Review API responses for consistency and clarity, but no major functional redesign.
 
 #### 5. Verification & Finalization
 - [ ] Thoroughly verify all new features locally.
