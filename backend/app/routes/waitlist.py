@@ -10,7 +10,7 @@ from ..utils.geo import get_country_from_ip
 router = APIRouter()
 
 @router.post("/waitlist", response_model=schemas.WaitlistOut, status_code=status.HTTP_201_CREATED)
-async def create_waitlist_entry(request: Request, entry: schemas.WaitlistCreate, db: AsyncSession = Depends(get_db), background_tasks: BackgroundTasks = Depends()):
+async def create_waitlist_entry(request: Request, entry: schemas.WaitlistCreate, db: AsyncSession = Depends(get_db), background_tasks: BackgroundTasks):
     # Normalize email
     normalized_email = entry.email.lower().strip()
 
