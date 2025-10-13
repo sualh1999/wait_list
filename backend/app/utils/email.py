@@ -12,7 +12,7 @@ def _send_sync_email(to_email: str, msg: MIMEMultipart):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     try:
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
+        with smtplib.SMTP(smtp_server, smtp_port, timeout=30) as server:
             server.starttls()
             server.login(settings.GMAIL_USER, settings.GMAIL_PASS)
             server.send_message(msg)
