@@ -35,7 +35,7 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 
 ### 4. Deployment
 - [x] Deploy Supabase project and create table (instructions in README)
-- [ ] Deploy backend to Render (Docker), set env
+- [x] Deploy backend to Render (Docker), set env
 - [ ] Deploy frontend to Vercel, set env
 - [ ] Verify live frontend <-> backend integration
 
