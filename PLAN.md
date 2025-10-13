@@ -67,10 +67,10 @@ Enhance the Waitlist App by collecting optional first name and last name from us
 - [x] Update `backend/tests/test_waitlist.py`: Adjust tests to account for the new fields and country detection.
 
 #### 2. Automated Database Table Creation (Alembic)
-- [ ] Initialize Alembic for database migrations in the `backend/` directory.
-- [ ] Generate an initial migration script for the `Waitlist` model.
-- [ ] Add a command to `backend/Dockerfile` to run Alembic migrations on container startup.
-- [ ] Update `README.md` with instructions for managing Alembic migrations.
+- [x] Initialize Alembic for database migrations in the `backend/` directory.
+- [x] Generate an initial migration script for the `Waitlist` model.
+- [x] Add a command to `backend/Dockerfile` to run Alembic migrations on container startup.
+- [x] Update `README.md` with instructions for managing Alembic migrations.
 
 #### 3. Admin Page Filtering and Search
 - [ ] Update `backend/app/routes/admin.py`: Modify the `/admin/list` endpoint to accept optional query parameters for filtering (e.g., by email, first name, last name, country) and a general search term.
