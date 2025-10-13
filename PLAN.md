@@ -73,9 +73,9 @@ Enhance the Waitlist App by collecting optional first name and last name from us
 - [x] Update `README.md` with instructions for managing Alembic migrations.
 
 #### 3. Admin Page Filtering and Search
-- [ ] Update `backend/app/routes/admin.py`: Modify the `/admin/list` endpoint to accept optional query parameters for filtering (e.g., by email, first name, last name, country) and a general search term.
-- [ ] Update `backend/app/crud.py`: Implement the logic to apply these filters and search queries to the database results.
-- [ ] Update `frontend/src/app/admin/page.tsx`: Add input fields for filtering and searching, and update the data fetching logic to send these parameters to the backend.
+- [x] Update `backend/app/routes/admin.py`: Modify the `/admin/list` endpoint to accept optional query parameters for filtering (e.g., by email, first name, last name, country) and a general search term.
+- [x] Update `backend/app/crud.py`: Implement the logic to apply these filters and search queries to the database results.
+- [x] Update `frontend/src/app/admin/page.tsx`: Add input fields for filtering and searching, and update the data fetching logic to send these parameters to the backend.
 
 #### 4. Redesign, Dark Mode & Animations
 - [ ] **Frontend Redesign:**
