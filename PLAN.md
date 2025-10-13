@@ -83,7 +83,7 @@ Enhance the Waitlist App by collecting optional first name and last name from us
     - [x] Add a dark mode toggle and apply dark mode styling across the frontend.
     - [x] Incorporate subtle animations for user interactions (e.g., form submission, loading states, page transitions).
 - [ ] **Email Redesign:**
-    - [ ] Update `backend/app/utils/email.py`: Use a more creative and visually appealing HTML template for the welcome email.
+    - [x] Update `backend/app/utils/email.py`: Use a more creative and visually appealing HTML template for the welcome email.
 - [ ] **Backend (Minor Aesthetic):**
     - [ ] (Optional) Review API responses for consistency and clarity, but no major functional redesign.
 
