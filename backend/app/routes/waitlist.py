@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi import APIRouter, Depends, HTTPException, status, Request, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
@@ -10,7 +10,7 @@ from ..utils.geo import get_country_from_ip
 router = APIRouter()
 
 @router.post("/waitlist", response_model=schemas.WaitlistOut, status_code=status.HTTP_201_CREATED)
-async def create_waitlist_entry(request: Request, entry: schemas.WaitlistCreate, db: AsyncSession = Depends(get_db)):
+async def create_waitlist_entry(request: Request, entry: schemas.WaitlistCreate, db: AsyncSession = Depends(get_db), background_tasks: BackgroundTasks = Depends()):
     # Normalize email
     normalized_email = entry.email.lower().strip()
 
@@ -25,7 +25,7 @@ async def create_waitlist_entry(request: Request, entry: schemas.WaitlistCreate,
 
     try:
         new_entry = await crud.create_waitlist_entry(db, entry, country)
-        await send_welcome_email(new_entry.email)
+        background_tasks.add_task(send_welcome_email, new_entry.email)
         return new_entry
     except IntegrityError:
         # This catches a race condition if two requests try to insert the same email simultaneously
