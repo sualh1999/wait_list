@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type ErrorWithMessage = {
   detail: string;
@@ -22,6 +22,18 @@ export default function HomePage() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const warmUpServer = async () => {
+      try {
+        await fetch(`https://wait-list-nwtz.onrender.com/health`);
+        console.log('Backend warmed up successfully.');
+      } catch (err) {
+        console.error('Failed to warm up backend:', err);
+      }
+    };
+    warmUpServer();
+  }, []); // Run once on component mount
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
