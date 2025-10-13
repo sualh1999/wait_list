@@ -1,11 +1,14 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import logging
 from ..config import settings
+
+logger = logging.getLogger(__name__)
 
 async def send_welcome_email(to_email: str):
     if not settings.GMAIL_USER or not settings.GMAIL_PASS:
-        print("GMAIL_USER or GMAIL_PASS is not set. Skipping email sending.")
+        logger.warning("GMAIL_USER or GMAIL_PASS is not set. Skipping email sending.")
         return
 
     smtp_server = "smtp.gmail.com"
@@ -70,12 +73,12 @@ async def send_welcome_email(to_email: str):
     msg.attach(MIMEText(plain_text_content, "plain"))
     msg.attach(MIMEText(html_content, "html"))
 
-    print(f"Attempting to send email to {to_email}...")
+    logger.info(f"Attempting to send email to {to_email}...")
     try:
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
             server.login(settings.GMAIL_USER, settings.GMAIL_PASS)
             server.send_message(msg)
-        print(f"Email sent successfully to {to_email}")
+        logger.info(f"Email sent successfully to {to_email}")
     except Exception as e:
-        print(f"Failed to send email to {to_email}: {e}")
+        logger.error(f"Failed to send email to {to_email}: {e}")
