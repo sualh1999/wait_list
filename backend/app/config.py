@@ -3,8 +3,8 @@ from typing import List, Optional
 
 class Settings(BaseSettings):
     DATABASE_URL: str
-    GMAIL_USER: str
-    GMAIL_PASS: str
+    API_KEY: str
+    SENDER_EMAIL: str
     ADMIN_PASSWORD: str
     ALLOWED_ORIGINS: str = ""
 
