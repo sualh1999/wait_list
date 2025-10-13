@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     RESEND_API_KEY: str
     ADMIN_PASSWORD: str
-    ALLOWED_ORIGINS: Optional[List[str]] = None
+    ALLOWED_ORIGINS: str = ""
 
     model_config = SettingsConfigDict(env_file=None) # Explicitly disable .env file loading
 
