@@ -74,11 +74,20 @@ async def send_welcome_email(to_email: str):
     msg.attach(MIMEText(html_content, "html"))
 
     logger.info(f"Attempting to send email to {to_email}...")
+    logger.debug(f"Email message details: From={msg['From']}, To={msg['To']}, Subject={msg['Subject']}")
     try:
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
             server.login(settings.GMAIL_USER, settings.GMAIL_PASS)
             server.send_message(msg)
         logger.info(f"Email sent successfully to {to_email}")
+    except smtplib.SMTPAuthenticationError as e:
+        logger.error(f"SMTP Authentication Error: Failed to log in to SMTP server. Check GMAIL_USER and GMAIL_PASS. Error: {e}")
+    except smtplib.SMTPServerDisconnected as e:
+        logger.error(f"SMTP Server Disconnected: The SMTP server unexpectedly disconnected. Error: {e}")
+    except smtplib.SMTPConnectError as e:
+        logger.error(f"SMTP Connect Error: Failed to connect to the SMTP server. Check host and port. Error: {e}")
+    except smtplib.SMTPException as e:
+        logger.error(f"SMTP Error: An unexpected SMTP error occurred. Error: {e}")
     except Exception as e:
-        logger.error(f"Failed to send email to {to_email}: {e}")
+        logger.error(f"An unexpected error occurred while sending email to {to_email}: {e}", exc_info=True)
