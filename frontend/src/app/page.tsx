@@ -49,18 +49,18 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
-      <div className="z-10 w-full max-w-md items-center justify-between font-mono text-sm lg:flex flex-col bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Join Our Waitlist</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+      <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+        <h1 className="text-3xl font-extrabold mb-6 text-center text-gray-900 dark:text-white">Join Our Waitlist</h1>
         <Form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+            <label htmlFor="email" className="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">
               Email:
             </label>
             <input
               type="email"
               id="email"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all duration-200"
               placeholder="your@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -68,31 +68,46 @@ export default function HomePage() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="firstName" className="block text-gray-700 text-sm font-bold mb-2">
+            <label htmlFor="firstName" className="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">
               First Name (optional):
             </label>
             <input
               type="text"
               id="firstName"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all duration-200"
               placeholder="John"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="lastName" className="block text-gray-700 text-sm font-bold mb-2">
+          <div className="mb-6">
+            <label htmlFor="lastName" className="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">
               Last Name (optional):
             </label>
             <input
               type="text"
               id="lastName"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all duration-200"
               placeholder="Doe"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Joining...' : 'Join Waitlist'}
+          </button>
+        </Form>
+        {message && <p className="mt-4 text-green-600 dark:text-green-400 text-center text-sm">{message}</p>}
+        {error && <p className="mt-4 text-red-600 dark:text-red-400 text-center text-sm">{typeof error === 'object' && error !== null && 'detail' in error ? (error as any).detail : error}</p>}
+      </div>
+    </main>
+  );
+}
+
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
