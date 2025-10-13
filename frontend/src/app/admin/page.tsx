@@ -122,9 +122,10 @@ export default function AdminPage() {
 
   if (!token) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-100 transition-colors duration-300">
-        <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-2xl border border-gray-200 transition-colors duration-300">
-          <h1 className="text-3xl font-extrabold mb-6 text-center text-gray-900">Admin Login</h1>
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-indigo-100 transition-colors duration-300">
+        <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl border border-gray-100 transform hover:scale-105 transition-all duration-300 ease-in-out">
+          <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800 tracking-tight">Admin Login</h1>
+          <p className="text-center text-gray-600 mb-8">Access the waitlist management dashboard.</p>
           <Form onSubmit={handleLogin}>
             <div className="mb-6">
               <label htmlFor="password" className="block text-gray-700 text-sm font-semibold mb-2">
@@ -133,7 +134,7 @@ export default function AdminPage() {
               <input
                 type="password"
                 id="password"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                 placeholder="Enter admin password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -142,7 +143,7 @@ export default function AdminPage() {
             </div>
             <button
               type="submit"
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 transform hover:scale-105 active:scale-95"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -166,13 +167,13 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 bg-gray-100 transition-colors duration-300">
-      <div className="w-full max-w-5xl p-8 bg-white rounded-xl shadow-2xl border border-gray-200 transition-colors duration-300">
+    <main className="flex min-h-screen flex-col items-center p-4 bg-gradient-to-br from-blue-50 to-indigo-100 transition-colors duration-300">
+      <div className="w-full max-w-5xl p-8 bg-white rounded-2xl shadow-xl border border-gray-100 transform hover:scale-105 transition-all duration-300 ease-in-out">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-extrabold text-gray-900">Admin Dashboard</h1>
+          <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">Admin Dashboard</h1>
           <button
             onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 transform hover:scale-105 active:scale-95"
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200 transform hover:scale-105 active:scale-95"
           >
             Logout
           </button>
@@ -186,7 +187,7 @@ export default function AdminPage() {
               <input
                 type="text"
                 id="filterEmail"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                 value={filterEmail}
                 onChange={(e) => setFilterEmail(e.target.value)}
                 placeholder="Filter by email"
@@ -197,7 +198,7 @@ export default function AdminPage() {
               <input
                 type="text"
                 id="filterFirstName"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                 value={filterFirstName}
                 onChange={(e) => setFilterFirstName(e.target.value)}
                 placeholder="Filter by first name"
@@ -208,7 +209,7 @@ export default function AdminPage() {
               <input
                 type="text"
                 id="filterLastName"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                 value={filterLastName}
                 onChange={(e) => setFilterLastName(e.target.value)}
                 placeholder="Filter by last name"
@@ -219,7 +220,7 @@ export default function AdminPage() {
               <input
                 type="text"
                 id="filterCountry"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                 value={filterCountry}
                 onChange={(e) => setFilterCountry(e.target.value)}
                 placeholder="Filter by country"
@@ -230,7 +231,7 @@ export default function AdminPage() {
               <input
                 type="text"
                 id="searchQuery"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 text-gray-800"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search all fields"
@@ -239,7 +240,7 @@ export default function AdminPage() {
           </div>
           <button
             onClick={() => fetchWaitlistEntries(token!)}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 transform hover:scale-105 active:scale-95"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
             disabled={isLoading}
           >
             {isLoading ? (
