@@ -2,7 +2,131 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-<form onSubmit={handleLogin}>
+
+
+interface WaitlistEntry {
+  id: string;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  country?: string;
+  created_at: string;
+}
+
+export default function AdminPage() {
+  const [password, setPassword] = useState('');
+  const [token, setToken] = useState<string | null>(null);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [waitlistEntries, setWaitlistEntries] = useState<WaitlistEntry[]>([]);
+  const [filterEmail, setFilterEmail] = useState('');
+  const [filterFirstName, setFilterFirstName] = useState('');
+  const [filterLastName, setFilterLastName] = useState('');
+  const [filterCountry, setFilterCountry] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
+
+  const fetchWaitlistEntries = useCallback(async (authToken: string) => {
+    setIsLoading(true);
+    setError('');
+    try {
+      const params = new URLSearchParams();
+      if (filterEmail) params.append('email', filterEmail);
+      if (filterFirstName) params.append('first_name', filterFirstName);
+      if (filterLastName) params.append('last_name', filterLastName);
+      if (filterCountry) params.append('country', filterCountry);
+      if (searchQuery) params.append('search', searchQuery);
+
+      const queryString = params.toString();
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/admin/list${queryString ? `?${queryString}` : ''}`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+        },
+      });
+
+      if (response.ok) {
+        const data: WaitlistEntry[] = await response.json();
+        setWaitlistEntries(data);
+      } else if (response.status === 401) {
+        setError('Unauthorized. Please log in again.');
+        setToken(null);
+        sessionStorage.removeItem('admin_token');
+      } else {
+        const errorData = await response.json();
+        setError(errorData.detail || 'Failed to fetch waitlist entries.');
+      }
+    } catch (err) {
+      setError('Network error while fetching entries.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [filterEmail, filterFirstName, filterLastName, filterCountry, searchQuery]);
+
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem('admin_token');
+    if (storedToken) {
+      setToken(storedToken);
+      fetchWaitlistEntries(storedToken);
+    }
+  }, [fetchWaitlistEntries]);
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setMessage('');
+    setError('');
+
+    if (!password) {
+      setError('Password cannot be empty.');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem('admin_token', data.access_token);
+        setToken(data.access_token);
+        setMessage('Login successful!');
+        setPassword('');
+        fetchWaitlistEntries(data.access_token);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.detail || 'Login failed.');
+      }
+    } catch (err) {
+      setError('Network error. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    setToken(null);
+    sessionStorage.removeItem('admin_token');
+    setWaitlistEntries([]);
+    setMessage('Logged out successfully.');
+  };
+
+  if (!token) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-indigo-100 transition-colors duration-300">
+        <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl border border-gray-100 transform hover:scale-105 transition-all duration-300 ease-in-out">
+          <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800 tracking-tight">Admin Login</h1>
+          <p className="text-center text-gray-600 mb-8">Access the waitlist management dashboard.</p>
+          <form onSubmit={handleLogin}>
             <div className="mb-6">
               <label htmlFor="password" className="block text-gray-700 text-sm font-semibold mb-2">
                 Password:
