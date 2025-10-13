@@ -46,5 +46,5 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 - [x] Add github/workflows/ci.yml
 
 ### 6. Documentation & finalization
-- [ ] README with live URLs, admin password, and local dev steps
-- [ ] Clean up and final commit
+- [x] README with live URLs, admin password, and local dev steps
+- [x] Clean up and final commit
