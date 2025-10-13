@@ -20,7 +20,7 @@ function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
     typeof error === 'object' &&
     error !== null &&
     'detail' in error &&
-    typeof (error as any).detail === 'string'
+    typeof (error as Record<string, unknown>).detail === 'string'
   );
 }
 
