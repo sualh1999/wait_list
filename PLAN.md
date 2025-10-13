@@ -48,3 +48,46 @@ Build Waitlist App: FastAPI backend + Next.js frontend + Supabase + Resend + Doc
 ### 6. Documentation & finalization
 - [x] README with live URLs, admin password, and local dev steps
 - [x] Clean up and final commit
+
+## Proposed Plan — Waitlist App Enhancements (Revised)
+
+### Overview
+Enhance the Waitlist App by collecting optional first name and last name from users, and automatically detecting their country from the request. Implement filtering and search on the admin page. Redesign the frontend, backend, and email with a creative aesthetic, dark mode, and animations. Finally, automate database table creation during Docker build/startup.
+
+### Checklist
+
+#### 1. User Information & Database Update
+- [x] Update `backend/app/models.py`: Add `first_name` (String, nullable), `last_name` (String, nullable), `country` (String, nullable) to the `Waitlist` model.
+- [x] Update `backend/app/schemas.py`: Include `first_name` and `last_name` in `WaitlistCreate` and all three new fields (`first_name`, `last_name`, `country`) in `WaitlistOut` Pydantic models.
+- [x] Update `backend/app/crud.py`: Adjust functions to handle the new fields.
+- [x] Implement Country Detection: Add a utility in the backend to detect the user's country based on the request's IP address (e.g., using a geo-IP library or a third-party API).
+- [x] Update `backend/app/routes/waitlist.py`: Integrate country detection into the POST endpoint.
+- [x] Update `frontend/src/app/page.tsx`: Add optional input fields for first name and last name (remove country input).
+- [x] Update `frontend/src/app/admin/page.tsx`: Display the new user information (first name, last name, country) in the admin list.
+- [x] Update `backend/tests/test_waitlist.py`: Adjust tests to account for the new fields and country detection.
+
+#### 2. Automated Database Table Creation (Alembic)
+- [ ] Initialize Alembic for database migrations in the `backend/` directory.
+- [ ] Generate an initial migration script for the `Waitlist` model.
+- [ ] Add a command to `backend/Dockerfile` to run Alembic migrations on container startup.
+- [ ] Update `README.md` with instructions for managing Alembic migrations.
+
+#### 3. Admin Page Filtering and Search
+- [ ] Update `backend/app/routes/admin.py`: Modify the `/admin/list` endpoint to accept optional query parameters for filtering (e.g., by email, first name, last name, country) and a general search term.
+- [ ] Update `backend/app/crud.py`: Implement the logic to apply these filters and search queries to the database results.
+- [ ] Update `frontend/src/app/admin/page.tsx`: Add input fields for filtering and searching, and update the data fetching logic to send these parameters to the backend.
+
+#### 4. Redesign, Dark Mode & Animations
+- [ ] **Frontend Redesign:**
+    - [ ] Implement a creative and modern design for the signup and admin pages.
+    - [ ] Add a dark mode toggle and apply dark mode styling across the frontend.
+    - [ ] Incorporate subtle animations for user interactions (e.g., form submission, loading states, page transitions).
+- [ ] **Email Redesign:**
+    - [ ] Update `backend/app/utils/email.py`: Use a more creative and visually appealing HTML template for the welcome email.
+- [ ] **Backend (Minor Aesthetic):**
+    - [ ] (Optional) Review API responses for consistency and clarity, but no major functional redesign.
+
+#### 5. Verification & Finalization
+- [ ] Thoroughly verify all new features locally.
+- [ ] Update `PLAN.md` with the new checklist and mark completed tasks.
+- [ ] Commit changes frequently with descriptive messages.
