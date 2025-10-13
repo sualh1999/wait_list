@@ -20,7 +20,13 @@ async def create_waitlist_entry(request: Request, entry: schemas.WaitlistCreate,
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already on waitlist")
 
     # Get client IP and detect country
-    client_ip = request.client.host if request.client else None
+    client_ip = request.headers.get("x-forwarded-for")
+    if client_ip:
+        # Sometimes multiple IPs are listed, take the first
+        client_ip = client_ip.split(",")[0].strip()
+    else:
+        # fallback to request.client.host (usually internal)
+        client_ip = request.client.host if request.client else None
     country = await get_country_from_ip(client_ip)
 
     try:
