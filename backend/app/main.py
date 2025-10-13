@@ -1,13 +1,13 @@
-import logging
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
 from .routes import waitlist, admin
+
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -30,4 +30,3 @@ app.include_router(admin.router)
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
-
